@@ -109,6 +109,6 @@ class AlbumController extends Controller
         return response()->json([
             'data' => [],
             'message' => sprintf('Album with id:%s is deleted', $id)
-        ], 200);
+        ], 204);
     }
 }
