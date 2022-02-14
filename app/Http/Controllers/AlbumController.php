@@ -71,21 +71,44 @@ class AlbumController extends Controller
      *
      * @param  \App\Http\Requests\UpdateAlbumRequest  $request
      * @param  \App\Models\Album  $album
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(UpdateAlbumRequest $request, Album $album)
+    public function update(UpdateAlbumRequest $request, string $id)
     {
-        //
+        $album = Album::find((int)$id);
+        if (!$album) {
+            return response()->json([
+                'data' => [],
+                'message' => 'Album not found'
+            ], 500);
+        }
+        $album->update($request->validated());
+
+        return response()->json([
+            'data' => $album,
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Album  $album
-     * @return \Illuminate\Http\Response
+     * @param string $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Album $album)
+    public function destroy(string $id)
     {
-        //
+        $album = Album::find((int)$id);
+        if (!$album) {
+            return response()->json([
+                'data' => [],
+                'message' => 'Album not found'
+            ], 500);
+        }
+        $album->delete();
+
+        return response()->json([
+            'data' => [],
+            'message' => sprintf('Album with id:%s is deleted', $id)
+        ], 200);
     }
 }
