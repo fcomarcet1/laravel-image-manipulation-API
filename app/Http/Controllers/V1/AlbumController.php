@@ -15,45 +15,38 @@ class AlbumController extends Controller
      **/
     public function index()
     {
-
-        return AlbumResource::collection(Album::paginate());
-        /*$albums = Album::all();
-        if (!$albums) {
-            //return $albums->toJson(JSON_PRETTY_PRINT);
+        $albums = Album::all();
+        if ($albums->isEmpty()) {
             return response()->json([
-                'data' => [],
-                'message' => 'No albums found'
+                'message' => 'No albums found',
+                'status' => 404
             ], 404);
         }
-
         // if we use the AlbumResource class, we can return the data in the following way
-        return response(AlbumResource::collection($albums), 200);
-        //return response()->json(['data' => $albums,], 200);*/
+        return AlbumResource::collection(Album::paginate(10));
+        //return response()->json(['data' => $albums,], 200);
+
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreAlbumRequest  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(StoreAlbumRequest $request)
     {
-        //var_dump($request->all()); die();
         // Album::create($request->all());
         $album = Album::create($request->validated());
         if (!$album) {
             return response('Album not created', 500);
         }
-        return response($album, 200);
+        return new AlbumResource($album);
+
+        //return response($album, 200);
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Album  $album
-     * @return \Illuminate\Http\JsonResponse
      */
     public function show(string $id)
     {
@@ -66,17 +59,12 @@ class AlbumController extends Controller
                 'message' => 'Album not found'
             ], 404);
         }
-        return response()->json([
-            'data' => $album,
-        ], 200);
+        //return response()->json(['data' => $album,], 200);
+        return new AlbumResource($album);
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateAlbumRequest  $request
-     * @param  \App\Models\Album  $album
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateAlbumRequest $request, string $id)
     {
@@ -89,9 +77,8 @@ class AlbumController extends Controller
         }
         $album->update($request->validated());
 
-        return response()->json([
-            'data' => $album,
-        ], 200);
+        //return response()->json(['data' => $album,], 200);
+        return new AlbumResource($album);
     }
 
     /**
