@@ -21,8 +21,14 @@ return new class extends Migration
             $table->string('type', 25);
             $table->text('data');
             $table->string('output_path', 2000);
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('album_id')->constrained('albums');
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->foreignId('album_id')
+                ->constrained('albums')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }
