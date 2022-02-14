@@ -48,11 +48,22 @@ class AlbumController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Album  $album
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Album $album)
+    public function show(string $id)
     {
-        //
+        //return response($album, 200);
+        $album = Album::find($id);
+        //$album = Album::findOrFail((int) $id); // return 404 if not found
+        if (!$album) {
+            return response()->json([
+                'data' => [],
+                'message' => 'Album not found'
+            ], 404);
+        }
+        return response()->json([
+            'data' => $album,
+        ], 200);
     }
 
     /**
