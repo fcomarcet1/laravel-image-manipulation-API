@@ -24,7 +24,8 @@ class AlbumController extends Controller
             ], 404);
         }
         //return new AlbumResource($albums);
-        return response(new AlbumResource($albums), 200);
+        // if we use the AlbumResource class, we can return the data in the following way
+        return response(AlbumResource::collection($albums), 200);
         //return response()->json(['data' => $albums,], 200);
     }
 
