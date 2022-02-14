@@ -10,12 +10,20 @@ class AlbumController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+     **/
     public function index()
     {
-        //
+        $albums = Album::all();
+        if (!$albums) {
+            return response()->json([
+                'data' => [],
+                'message' => 'No albums found'
+            ], 404);
+        }
+
+        return response()->json([
+            'data' => $albums,
+        ], 200);
     }
 
     /**
@@ -26,7 +34,14 @@ class AlbumController extends Controller
      */
     public function store(StoreAlbumRequest $request)
     {
-        //
+        //var_dump($request->all()); die();
+        // Album::create($request->all());
+        $album = Album::create($request->validated());
+        if (!$album) {
+            return response('Album not created', 500);
+        }
+        return response($album, 200);
+
     }
 
     /**
