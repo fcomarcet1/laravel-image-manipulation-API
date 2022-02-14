@@ -15,7 +15,9 @@ class AlbumController extends Controller
      **/
     public function index()
     {
-        $albums = Album::all();
+
+        return AlbumResource::collection(Album::paginate());
+        /*$albums = Album::all();
         if (!$albums) {
             //return $albums->toJson(JSON_PRETTY_PRINT);
             return response()->json([
@@ -23,10 +25,10 @@ class AlbumController extends Controller
                 'message' => 'No albums found'
             ], 404);
         }
-        //return new AlbumResource($albums);
+
         // if we use the AlbumResource class, we can return the data in the following way
         return response(AlbumResource::collection($albums), 200);
-        //return response()->json(['data' => $albums,], 200);
+        //return response()->json(['data' => $albums,], 200);*/
     }
 
     /**
