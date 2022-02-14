@@ -7,6 +7,7 @@ use App\Http\Requests\ResizeImageRequest;
 use App\Models\ImageManipulation;
 use App\Http\Requests\StoreImageManipulationRequest;
 use App\Http\Requests\UpdateImageManipulationRequest;
+use Illuminate\Http\Client\Request;
 
 class ImageManipulationController extends Controller
 {
@@ -33,6 +34,15 @@ class ImageManipulationController extends Controller
     {
         //
     }
+
+    /**
+     * Get image resource by Album.
+     */
+    public function byAlbum(Request $request, string $id)
+    {
+        //
+    }
+
 
     /**
      * Display the specified resource.
