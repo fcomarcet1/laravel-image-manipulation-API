@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\AlbumResource;
 use App\Models\Album;
 use App\Http\Requests\StoreAlbumRequest;
 use App\Http\Requests\UpdateAlbumRequest;
@@ -15,15 +17,15 @@ class AlbumController extends Controller
     {
         $albums = Album::all();
         if (!$albums) {
+            //return $albums->toJson(JSON_PRETTY_PRINT);
             return response()->json([
                 'data' => [],
                 'message' => 'No albums found'
             ], 404);
         }
-
-        return response()->json([
-            'data' => $albums,
-        ], 200);
+        //return new AlbumResource($albums);
+        return response(new AlbumResource($albums), 200);
+        //return response()->json(['data' => $albums,], 200);
     }
 
     /**
