@@ -28,7 +28,7 @@ class ImageManipulationController extends Controller
     }
 
     /**
-     * Resize an image.
+     * Resize an image resource.
      */
     public function resize(ResizeImageRequest $request)
     {
