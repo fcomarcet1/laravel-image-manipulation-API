@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('albums', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->string('name', 255);
             $table->foreignIdFor(\App\Models\User::class, 'user_id');
             $table->timestamps();
