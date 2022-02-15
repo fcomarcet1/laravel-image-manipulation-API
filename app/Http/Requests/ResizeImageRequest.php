@@ -41,7 +41,6 @@ class ResizeImageRequest extends FormRequest
         }else {
             $rules['image'][] =  'url';
         }
-
         return $rules;
 
         /*$rules = [
