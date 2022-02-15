@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ResizeImageRequest;
 use App\Models\ImageManipulation;
 use App\Http\Requests\StoreImageManipulationRequest;
-use App\Http\Requests\UpdateImageManipulationRequest;
 use Illuminate\Http\Client\Request;
 
 class ImageManipulationController extends Controller
@@ -29,6 +28,7 @@ class ImageManipulationController extends Controller
 
     /**
      * Resize an image resource.
+     * http://localhost:8000/api/v1/images/resize?w=100&h=100 [height is optional]
      */
     public function resize(ResizeImageRequest $request)
     {

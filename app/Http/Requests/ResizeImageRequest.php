@@ -24,9 +24,28 @@ class ResizeImageRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
+
+        $rules =  [
             'image' => ['required'],
-            'w' => ['required', 'regex:/^\d+(\.\d+)?%?$/'],
+            'w' => ['required', 'regex:/^\d+(\.\d+)?%?$/'], // 50, 50.5, 50.5%, 50%, 50.123, 50.123%
+            'h' => 'regex:/^\d+(\.\d+)?%?$/', // 50, 50.5, 50.5%, 50%, 50.123, 50.123%
+            'album_id' => 'required|exists:albums,id',
+        ];
+
+        $image = $this->all()['image'] ?? false;
+
+        // check if image ig generated from url http://s3.amazomws.com/uploads/2020/11/235
+        // or uploaded file image.jgp
+        if ($image instanceof UploadedFile) {
+            $rules['image'][] =  'image';
+        }else {
+            $rules['image'][] =  'url';
+        }
+        return $rules;
+
+        /*$rules = [
+            'image' => ['required'],
+            'w' => ['required', 'regex:/^\d+(\.\d+)?%?$/'], // 50, 50.5, 50.5%, 50%, 50.123, 50.123%
             'h' => 'regex:/^\d+(\.\d+)?%?$/'
         ];
         // get all of the request inputs and files.
@@ -38,7 +57,7 @@ class ResizeImageRequest extends FormRequest
             $rules['image'][] = 'url';
         }
 
-        return $rules;
+        return $rules;*/
     }
 
     public function messages()

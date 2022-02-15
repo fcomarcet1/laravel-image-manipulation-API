@@ -29,9 +29,9 @@ Route::prefix('v1')->group(function() {
     Route::get('images/album/{id}', [ImageManipulationController::class, 'byAlbum']);
     Route::post('images/resize', [ImageManipulationController::class, 'resize']);
     Route::get('images/{id}', [ImageManipulationController::class, 'show']);
-    Route::get('images/{id}', [ImageManipulationController::class, 'destroy']);
+    Route::delete('images/{id}', [ImageManipulationController::class, 'destroy']);
 
-
+    # Users routes
 });
 
 /*Route::prefix('v1')->group(function() {
